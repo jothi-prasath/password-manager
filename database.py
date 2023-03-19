@@ -1,5 +1,6 @@
 import os
 import sqlite3
+import crypto
 
 def check():
     if os.path.isfile('passwords.db') and os.path.getsize('password.db') > 0:
@@ -18,4 +19,16 @@ def create():
                   password TEXT NOT NULL)''')
     conn.commit()
     conn.close()
+
+def add_password(service, username, password):
+    conn = sqlite3.connect()
+    c = conn.cursor()
+    encrypted_service = crypto.encrypt(service)
+    encrypted_username = crypto.encrypt(username)
+    encrypted_password = crypto.encrypt(password)
+    c.execute("INSERT INTO passwords (service, username, password) VALUES (?, ?, ?)",
+              (encrypted_service, encrypted_username, encrypted_password))
+    conn.commit()
+    conn.close()
+    
     

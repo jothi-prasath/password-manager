@@ -4,6 +4,10 @@ from cryptography.fernet import Fernet
 import sqlite3
 import database
 
+###temp key#####
+KEY = b'mzItZH9CMtULeYtR-YLFtGcLZetP2Q0b0DGV1q3BCqU='
+################
+
 print("database check: ",database.check())
 print("database create:",database.create())
 
