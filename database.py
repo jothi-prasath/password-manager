@@ -30,5 +30,18 @@ def add_password(service, username, password):
               (encrypted_service, encrypted_username, encrypted_password))
     conn.commit()
     conn.close()
-    
+
+def read_passwords():
+    conn = sqlite3.connect('passwords.db')
+    c = conn.cursor()
+    c.execute("SELECT service, username, password FROM passwords")
+    rows = c.fetchall()
+    passwords = []
+    for row in rows:
+        service = crypto.decrypt(row[0]).strip()
+        username = crypto.decrypt(row[1]).strip()
+        password = crypto.decrypt(row[2]).strip()
+        passwords.append((service, username, password))
+    conn.close()
+    return passwords
     
