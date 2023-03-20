@@ -1,9 +1,9 @@
-import os
-import sqlite3
-import crypto
+import os;
+import sqlite3;
+import crypto;
 
 def check():
-    if os.path.isfile('passwords.db') and os.path.getsize('password.db') > 0:
+    if os.path.isfile('passwords.db') and os.path.getsize('passwords.db') > 0:
         db_exists=True
     else:
         db_exists=False

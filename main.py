@@ -8,8 +8,8 @@ import database
 KEY = b'mzItZH9CMtULeYtR-YLFtGcLZetP2Q0b0DGV1q3BCqU='
 ################
 
-print("database check: ",database.check())
-print("database create:",database.create())
+print("database check: ", database.check())
+print("database create:", database.create())
 
 
 main_window = tk.Tk()
