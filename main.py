@@ -4,6 +4,7 @@ from cryptography.fernet import Fernet
 import database
 import crypto
 import main_window
+import signup_window
 
 ###temp key#####
 #KEY = b'mzItZH9CMtULeYtR-YLFtGcLZetP2Q0b0DGV1q3BCqU='
@@ -11,28 +12,33 @@ import main_window
 KEY = b'n4bQgYhMfWWaL-qgxVrQFaO_TxsrC4Is0V1sFbDwCgg='
 ################
 
-print("database exist: ", database.check())
-print("database create:", database.create())
+def create():
 
-def validation():
-    if crypto.generate(master_password_entry.get()) == KEY:
-        print("correct password")
-        login_window.destroy() 
-        main_window.create(KEY) 
+    def validation():
+        if crypto.generate(master_password_entry.get()) == KEY:
+            print("correct password")
+            login_window.destroy() 
+            main_window.create(KEY) 
 
-    else:
-        print("wrong password")
+        else:
+            messagebox.showinfo("Error", "Wrong Password")
 
-login_window = tk.Tk()
-login_window.title("Password Manager")
-login_window.geometry("400x300")
-password_lable = tk.Label(login_window, text="Master Password")
-password_lable.pack()
+    login_window = tk.Tk()
+    login_window.title("Password Manager")
+    login_window.geometry("400x300")
+    password_lable = tk.Label(login_window, text="Master Password")
+    password_lable.pack()
 
-master_password_entry = tk.Entry(login_window, show="*")
-master_password_entry.pack()
-add_button = tk.Button(login_window, text="submit", command=validation)
-add_button.pack()
+    master_password_entry = tk.Entry(login_window, show="*")
+    master_password_entry.pack()
+    add_button = tk.Button(login_window, text="submit", command=validation)
+    add_button.pack()
+
+    login_window.mainloop()
 
 
-login_window.mainloop()
+if database.check()== True:
+    print("database exist")
+    create()
+else:
+    signup_window.create()

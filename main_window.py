@@ -1,7 +1,5 @@
 import tkinter as tk
 from tkinter import messagebox
-import sqlite3
-import crypto
 import database
 
 def create(KEY):
