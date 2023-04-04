@@ -6,20 +6,13 @@ import crypto
 import main_window
 import signup_window
 
-###temp key#####
-#KEY = b'mzItZH9CMtULeYtR-YLFtGcLZetP2Q0b0DGV1q3BCqU='
-#KEY = "730a107cecab83da37f6468d831dcdbbdedf156dc0c45bb037d4f7b0f31cf860"  ### ==>test
-KEY = b'n4bQgYhMfWWaL-qgxVrQFaO_TxsrC4Is0V1sFbDwCgg='
-################
-
 def create():
 
     def validation():
-        if crypto.generate(master_password_entry.get()) == KEY:
-            print("correct password")
+        generated_key = crypto.generate(master_password_entry.get())
+        if generated_key == KEY:
             login_window.destroy() 
             main_window.create(KEY) 
-
         else:
             messagebox.showinfo("Error", "Wrong Password")
 
@@ -36,9 +29,10 @@ def create():
 
     login_window.mainloop()
 
-
 if database.check()== True:
     print("database exist")
+    KEY=database.getkey()
+    KEY=KEY[2:-1].encode('utf-8')
     create()
 else:
     signup_window.create()

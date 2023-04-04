@@ -14,11 +14,21 @@ def create():
     c = conn.cursor()
     c.execute('''CREATE TABLE IF NOT EXISTS passwords
                  (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  key TEXT NOT NULL,
                   service TEXT NOT NULL,
                   username TEXT NOT NULL,
                   password TEXT NOT NULL)''')
     conn.commit()
     conn.close()
+
+def getkey():
+    conn = sqlite3.connect('passwords.db')
+    c = conn.cursor()
+    c.execute("SELECT key FROM passwords")
+    rows=str(c.fetchone())
+    KEY=rows.strip("(),")
+    conn.close()
+    return KEY
 
 def add_password(service, username, password, KEY):
     conn = sqlite3.connect('passwords.db')
@@ -26,8 +36,8 @@ def add_password(service, username, password, KEY):
     encrypted_service = crypto.encrypt(service,KEY)
     encrypted_username = crypto.encrypt(username,KEY)
     encrypted_password = crypto.encrypt(password,KEY)
-    c.execute("INSERT INTO passwords (service, username, password) VALUES (?, ?, ?)",
-              (encrypted_service, encrypted_username, encrypted_password))
+    c.execute("INSERT INTO passwords (key, service, username, password) VALUES (?, ?, ?, ?)",
+              (KEY,encrypted_service, encrypted_username, encrypted_password))
     conn.commit()
     conn.close()
 
