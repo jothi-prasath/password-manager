@@ -1,21 +1,18 @@
 from cryptography.fernet import Fernet
 import hashlib
-import binascii
+import base64
 
 def generate(password):
-    salt = b''
-    temp = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 100000, dklen=32)
-    KEY = binascii.hexlify(temp).decode()
-    return KEY
+    key = hashlib.sha256(password.encode()).digest()
+    fernet_key = base64.urlsafe_b64encode(key)
+    return fernet_key
 
-def encrypt(message):
-    from main import KEY
+def encrypt(message,KEY):
     f = Fernet(KEY)
     encrypted_message = f.encrypt(message.encode())
     return encrypted_message
 
-def decrypt(message):
-    from main import KEY
+def decrypt(message,KEY):
     f = Fernet(KEY)
     decrypted_message = f.decrypt(message).decode()
     return decrypted_message
