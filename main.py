@@ -8,6 +8,7 @@ import signup_window
 
 def create():
 
+    #checks whether generated key and database saved key are same
     def validation():
         generated_key = crypto.generate(master_password_entry.get())
         if generated_key == KEY:
@@ -29,6 +30,7 @@ def create():
 
     login_window.mainloop()
 
+# check whether database is exist or not
 if database.check()== True:
     print("database exist")
     KEY=database.getkey()

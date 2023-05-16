@@ -2,6 +2,7 @@ import os;
 import sqlite3;
 import crypto;
 
+# checks whether there password.db is in current directory
 def check():
     if os.path.isfile('passwords.db') and os.path.getsize('passwords.db') > 0:
         db_exists=True
@@ -22,6 +23,7 @@ def create():
     conn.close()
 
 def getkey():
+    # gets the key form the passwords.db
     conn = sqlite3.connect('passwords.db')
     c = conn.cursor()
     c.execute("SELECT key FROM passwords")

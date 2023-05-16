@@ -8,8 +8,10 @@ def create():
     def validation():
         password1 = password1_entry.get()
         password2 = password2_entry.get()
+        # checks password1 and password2 field are filled
         if not password1 or not password2:
             messagebox.showerror("Error", "Please enter all fields.")
+        # checks password1 and password2 are not same
         elif (password1 != password2):
             messagebox.showerror("Error", "Passwords missmatch.")
         else:
