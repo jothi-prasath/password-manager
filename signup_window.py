@@ -32,6 +32,10 @@ def create():
     repassword_label.pack()
     password2_entry = tk.Entry(signup_window, show="*")
     password2_entry.pack()
+    def enter(event):
+        command=validation()
+    # bind enter key to validate function
+    password2_entry.bind('<Return>',enter)
     submit = tk.Button(signup_window, text="submit", command=validation)
     submit.pack()
     signup_window.mainloop()    

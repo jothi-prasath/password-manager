@@ -22,9 +22,12 @@ def create():
     login_window.geometry("400x300")
     password_lable = tk.Label(login_window, text="Master Password")
     password_lable.pack()
-
     master_password_entry = tk.Entry(login_window, show="*")
     master_password_entry.pack()
+    def enter(event):
+        command=validation()
+    # bind enter key to validate function
+    master_password_entry.bind('<Return>',enter)
     add_button = tk.Button(login_window, text="submit", command=validation)
     add_button.pack()
 
