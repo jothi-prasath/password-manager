@@ -14,7 +14,6 @@ def create():
             messagebox.showerror("Error", "Passwords missmatch.")
         else:
             KEY = crypto.generate(password1)
-            print(KEY)
             database.create()
             signup_window.destroy()
             main_window.create(KEY)

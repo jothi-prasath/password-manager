@@ -35,4 +35,5 @@ if database.check()== True:
     KEY=KEY[2:-1].encode('utf-8')
     create()
 else:
+    print("database not exist")
     signup_window.create()
