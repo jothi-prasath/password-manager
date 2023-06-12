@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 import database
+import sqlite3
+import crypto
 
 def create(KEY):
     def add_password_click():
@@ -22,7 +24,7 @@ def create(KEY):
             popup = tk.Toplevel()
             popup.geometry("400x300")
             popup.title("Passwords")
-            passwords_text = "\n".join([f"{p[0]} | {p[1]} | {p[2]}" for p in passwords])
+            passwords_text = "\n".join([f"{p[0]} | {p[1]} | {p[2]}| {p[3]}" for p in passwords])
             passwords_label = tk.Label(popup, text=passwords_text)
             passwords_label.pack()
 
@@ -30,8 +32,15 @@ def create(KEY):
                 popup.destroy()
             close_button = tk.Button(popup, text="Close", command=close_window)
             close_button.pack()
-
-
+    
+    def delete_passwords_click():
+        delete_pass_id=delete_password_entry.get();
+        if delete_pass_id == "":
+            messagebox.showinfo("error","Enter valid id")
+        else:
+            database.delete_password(delete_pass_id)
+            messagebox.showinfo("info","Password deleted")
+            
     main_window = tk.Tk()
     main_window.title("Password Manager")
     main_window.geometry("400x300")
@@ -54,5 +63,13 @@ def create(KEY):
     add_button.pack()
 
     view_button = tk.Button(main_window, text="View Passwords", command=view_passwords_click)
+    view_button.pack()
+
+    delete_password_label = tk.Label(main_window, text="id")
+    delete_password_label.pack()
+    delete_password_entry = tk.Entry(main_window)
+    delete_password_entry.pack()
+
+    view_button = tk.Button(main_window, text="Delete Password", command=delete_passwords_click)
     view_button.pack()
     

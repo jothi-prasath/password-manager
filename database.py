@@ -46,14 +46,21 @@ def add_password(service, username, password, KEY):
 def read_passwords(KEY):
     conn = sqlite3.connect('passwords.db')
     c = conn.cursor()
-    c.execute("SELECT service, username, password FROM passwords")
+    c.execute("SELECT id, service, username, password FROM passwords")
     rows = c.fetchall()
     passwords = []
     for row in rows:
-        service = crypto.decrypt(row[0],KEY).strip()
-        username = crypto.decrypt(row[1],KEY).strip()
-        password = crypto.decrypt(row[2],KEY).strip()
-        passwords.append((service, username, password))
+        id = row[0]
+        service = crypto.decrypt(row[1],KEY).strip()
+        username = crypto.decrypt(row[2],KEY).strip()
+        password = crypto.decrypt(row[3],KEY).strip()
+        passwords.append((id,service, username, password))
     conn.close()
     return passwords
     
+def delete_password(id):
+    conn = sqlite3.connect('passwords.db')
+    c = conn.cursor()
+    c.execute("DELETE FROM passwords WHERE id = ?",(id,))
+    conn.commit()
+    conn.close()
