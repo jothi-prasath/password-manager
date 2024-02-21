@@ -1,5 +1,5 @@
 cffi==1.15.1
-cryptography==42.0.2
+cryptography==42.0.4
 pycparser==2.21
 pysqlite3==0.5.0
 tk==0.1.0
